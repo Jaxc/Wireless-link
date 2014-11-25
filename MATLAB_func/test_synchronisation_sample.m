@@ -18,8 +18,8 @@ signal(2) = 3 + j.*3;
 signal(3) = 3 + j.*3;
 signal(4) = 3 + j.*3;
 
-%phi = pi./7; % The phase rotation.
-phi=0;
+phi = 0.12*pi; % The phase rotation.
+%phi=0;
 signal_before_rotation = signal;
 
 % The signal gets a constant phase rotation.
@@ -31,6 +31,7 @@ for i = 1:N
     phi_2 = 0.0.*randn(1,1) + 0.00*i^1;
     signal(i) = signal(i).*exp(j.*phi_2);
 end
+signal=signal+randn(1,numel(signal))*0.05+1i*randn(1,numel(signal))*0.05;
 figure()
 plot(signal,'.')
 
@@ -60,13 +61,13 @@ for i = 4:N
         start = 0;
         [signal_corrected(i - 3),phi_updated,theta_updated,...
             theta_updated_2] = frequency_synchronisation_sample(...
-            signal(i-3),phi_updated,theta_updated,theta_updated_2);
+            signal(i-3),phi_updated,theta_updated,theta_updated_2,exact_value);
     end
     if (i == N)
         for j = 1:3
             [signal_corrected(N - 3 + j),phi_updated,theta_updated,theta_updated_2] = ...
                 frequency_synchronisation_sample(signal(N - 3 + j),...
-                phi_updated,theta_updated,theta_updated_2);
+                phi_updated,theta_updated,theta_updated_2,exact_value);
         end
     end
     theta_updated_2_vec(i) = theta_updated_2;
@@ -104,7 +105,7 @@ hold on
 %plot(signal_corrected,'r.')
 hold on
 plot(signal_corrected(1000:end), 'r.');
-
+grid on
 %plot(signal_corrected_2,'m.')
 axis([-4 4 -4 4])
 axis equal
@@ -116,3 +117,4 @@ plot(phi_updated_vec)
 hold on
 plot(-phi.*ones(1,N),'r')
 title('Phase offset per symbol');
+grid on

@@ -24,7 +24,8 @@ for outer=1:floor(numel(samples)/sps-1)
     %offset=1;
     offsetvec(outer)=offset;
 end
-%figure()
-%plot(offsetvec);
+figure(15)
+plot(offsetvec)
+title('gardner offset')
 end
 
