@@ -1,0 +1,27 @@
+function [ output,output2] = TX_RRC_filtering( symbols, samples_between, window )
+%RRC_filtering Returns a root-raised cosine filtered vector of the symbols
+%provided.
+%   samples_between corresponds to the number of sample periods between
+%   consecutive pulses in the output waveform. window specifies the length
+%   of the filter and is given as a multiple of the symbol time. The output
+%   vector is of length (symbols+window)*samples_between.
+
+negt=0:-1/samples_between:-window/2;
+t=[fliplr(negt(2:end)) 0:1/samples_between:window/2];
+pulse=rtrcpulse(0.35,t);
+symbol_train= [symbols; zeros(samples_between-1,length(symbols))];
+symbol_train=symbol_train(:);
+
+NFFT = 2length(symbol_train)+length(pulse)-1;
+tic
+pulse_fft = fft(pulse,NFFT).';
+syms_fft = fft(symbol_train,NFFT);
+output2 = ifft(pulse_fft.*syms_fft,NFFT);
+toc
+tic
+output=conv(symbol_train, pulse);
+toc
+numel(output)
+
+end
+
