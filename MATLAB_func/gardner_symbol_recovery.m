@@ -9,7 +9,7 @@ thesame=0;
 for outer=1:floor(numel(samples)/sps-1)
     current_start=(outer-1)*sps+offset;
     
-    if thesame>15
+    if thesame>10
         %k=0.0001*8*8;
         k = 0.00001*8*8;
     else
@@ -18,7 +18,8 @@ for outer=1:floor(numel(samples)/sps-1)
     end
     if current_start+sps<=numel(samples)
         symbol(outer)=samples(current_start);
-        error=error+k*((samples(current_start+sps/2)-mean([samples(current_start) samples(current_start+sps)]))*(samples(current_start)-samples(current_start+sps)));
+        error=error+k*(imag(samples(current_start+sps/2)-mean([samples(current_start) samples(current_start+sps)]))*imag(samples(current_start)-samples(current_start+sps)))/2;
+        error=error+k*(real(samples(current_start+sps/2)-mean([samples(current_start) samples(current_start+sps)]))*real(samples(current_start)-samples(current_start+sps)))/2;
     end
     if offset==round(error)
         thesame=thesame+1;
