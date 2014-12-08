@@ -20,7 +20,7 @@ if (abs(signal_sample) > exact_value)
     rotation = phi - angle(signal_sample) - phi_updated - theta_updated_2;
     phi_updated = phi_updated + 0.05.*rotation;
     %theta_updated = theta_updated + 0.1.*0.05.*rotation;
-    theta_updated = theta_updated + 0.2.*0.05.*rotation;
+    theta_updated = theta_updated + 0.05.*0.05.*rotation;
 end
 theta_updated_2 = theta_updated_2 + theta_updated;
 % Correcting for the rotation.
