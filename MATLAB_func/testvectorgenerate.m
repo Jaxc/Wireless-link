@@ -8,7 +8,7 @@
 %    end
 % end
 
-message = randi([0 1],4e4,1);
+message = randi([0 1],4e5,1);
 
 bits = [message'];
 
