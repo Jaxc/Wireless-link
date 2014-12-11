@@ -6,7 +6,7 @@ symbol=zeros(1,floor(numel(samples)/sps-1));
 offset=1;
 offsetvec=zeros(1,floor(numel(samples)/sps-1));
 thesame=0;
-k = 0.001*8*8;
+k = 0.0005*8*8;
 
 num_sample = numel(samples);
 
